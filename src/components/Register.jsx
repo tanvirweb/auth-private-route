@@ -1,13 +1,22 @@
-const Register = () => {
-    const handleRegister = e => {
-        e.preventDefault();
-        const name = e.target.name.value;
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        console.log(name, email, password);
+import { useContext } from "react";
+import { AuthProvide } from "../context/AuthContext";
 
-        
-    }
+const Register = () => {
+  const { userRegister } = useContext(AuthProvide);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(name, email, password);
+
+    userRegister(email, password)
+    .then(result => {
+      console.log(result.user)
+    })
+    .catch(err => console.log(err.message))
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -15,7 +24,7 @@ const Register = () => {
         <h1 className="text-5xl font-bold mb-4">Register now!</h1>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form onSubmit={handleRegister} className="card-body">
-          <div className="form-control">
+            <div className="form-control">
               <label className="label">
                 <span className="label-text">Your Name</span>
               </label>
@@ -57,7 +66,11 @@ const Register = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-                <input className="btn btn-primary" type="submit" value="Register" />
+              <input
+                className="btn btn-primary"
+                type="submit"
+                value="Register"
+              />
             </div>
           </form>
         </div>
