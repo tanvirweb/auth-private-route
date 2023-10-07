@@ -10,15 +10,21 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>
-      <li>
-        <NavLink to="/register">Register</NavLink>
-      </li>
-      <li>
-        <NavLink to="/oders">Oders</NavLink>
-      </li>
+      {!user && (
+        <>
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+          <li>
+            <NavLink to="/register">Register</NavLink>
+          </li>
+        </>
+      )}
+      {user && (
+        <li>
+          <NavLink to="/oders">Oders</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -55,15 +61,16 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        {user ? 
+        {user ? (
           <>
             <span>{user?.email}</span>
             <a onClick={logOut} className="btn">
               Log Out
             </a>
-          </> : 
+          </>
+        ) : (
           <Link to="/login">Login</Link>
-        }
+        )}
       </div>
     </div>
   );

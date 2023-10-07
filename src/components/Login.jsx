@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { AuthProvide } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { userLogin } = useContext(AuthProvide);
+  const { userLogin, googleLogin } = useContext(AuthProvide);
+  const navigate = useNavigate()
 
   const handleLogin = e => {
     e.preventDefault();
@@ -12,9 +14,15 @@ const Login = () => {
     userLogin(email, password)
       .then((result) => {
         console.log(result.user);
+        e.target.reset();
+        navigate("/");
       })
       .catch((err) => console.log(err.message));
   };
+
+  const handleGoogle = () => {
+    googleLogin()
+  }
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -55,6 +63,9 @@ const Login = () => {
               <input className="btn btn-primary" type="submit" value="Login" />
             </div>
           </form>
+          <div>
+            <button onClick={handleGoogle} className="btn btn-primary">Google LogIn</button>
+          </div>
         </div>
       </div>
     </div>
