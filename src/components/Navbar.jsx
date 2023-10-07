@@ -1,11 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthProvide } from "../context/AuthContext";
 
 const Navbar = () => {
-    const navItems = <>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/login">Login</NavLink></li>
-        <li><NavLink to="/register">Register</NavLink></li>
+  const { user, logOut } = useContext(AuthProvide);
+
+  const navItems = (
+    <>
+      <li>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/login">Login</NavLink>
+      </li>
+      <li>
+        <NavLink to="/register">Register</NavLink>
+      </li>
+      <li>
+        <NavLink to="/oders">Oders</NavLink>
+      </li>
     </>
+  );
 
   return (
     <div className="navbar bg-base-100">
@@ -37,12 +52,18 @@ const Navbar = () => {
         <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {navItems}
-        </ul>
+        <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? 
+          <>
+            <span>{user?.email}</span>
+            <a onClick={logOut} className="btn">
+              Log Out
+            </a>
+          </> : 
+          <Link to="/login">Login</Link>
+        }
       </div>
     </div>
   );
